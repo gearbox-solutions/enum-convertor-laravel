@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace GearboxSolutions\EnumConvertor;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use GearboxSolutions\EnumConvertor\Commands\EnumConvertorCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class EnumConvertorServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,8 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('enum-convertor-laravel')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasCommand(EnumConvertorCommand::class);
     }
 }
