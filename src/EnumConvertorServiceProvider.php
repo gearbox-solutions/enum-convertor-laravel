@@ -2,9 +2,9 @@
 
 namespace GearboxSolutions\EnumConvertor;
 
+use GearboxSolutions\EnumConvertor\Commands\EnumConvertorCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use GearboxSolutions\EnumConvertor\Commands\EnumConvertorCommand;
 
 class EnumConvertorServiceProvider extends PackageServiceProvider
 {

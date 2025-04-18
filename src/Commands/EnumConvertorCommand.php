@@ -4,7 +4,6 @@ namespace GearboxSolutions\EnumConvertor\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EnumConvertorCommand extends Command
@@ -19,11 +18,11 @@ class EnumConvertorCommand extends Command
             ->each(function ($outputPath, $path) {
                 $files = File::allFiles(base_path($path));
 
-                collect($files)->each(function($file) use ($outputPath) {
+                collect($files)->each(function ($file) use ($outputPath) {
                     $class = Str::of($file)->replace('.php', '')
                         ->replace(base_path(), '')
                         ->explode('/')
-                        ->map(fn($item) => Str::ucfirst($item))
+                        ->map(fn ($item) => Str::ucfirst($item))
                         ->implode('\\');
 
                     $items = collect($class::cases())->mapWithKeys(function ($item) {
@@ -31,7 +30,7 @@ class EnumConvertorCommand extends Command
                     });
 
                     $output = '';
-                    if($this->hasOption('js')) {
+                    if ($this->hasOption('js')) {
                         $output = $this->convertToJSEnum($items, $outputPath);
                     } else {
                         $output = $this->convertToTSEnum($items, $outputPath);
@@ -45,7 +44,7 @@ class EnumConvertorCommand extends Command
                     $output = str_replace('%enumName%', $name, $output);
 
                     $this->info("Writing {$class} to file {$outputPath}/{$outputFile}");
-                    File::put($outputPath . '/' . $outputFile, $output);
+                    File::put($outputPath.'/'.$outputFile, $output);
                 });
             });
 
@@ -80,7 +79,7 @@ class EnumConvertorCommand extends Command
 
     private function convertValue($item)
     {
-        return match(gettype($item)) {
+        return match (gettype($item)) {
             'string' => "\"$item\"",
             'integer', 'double' => $item,
             'NULL' => 'null',

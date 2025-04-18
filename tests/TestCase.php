@@ -2,9 +2,9 @@
 
 namespace GearboxSolutions\EnumConvertor\Tests;
 
+use GearboxSolutions\EnumConvertor\EnumConvertorServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use GearboxSolutions\EnumConvertor\EnumConvertorServiceProvider;
 
 class TestCase extends Orchestra
 {
