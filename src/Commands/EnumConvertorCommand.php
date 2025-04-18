@@ -1,0 +1,91 @@
+<?php
+
+namespace GearboxSolutions\EnumConvertor\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+class EnumConvertorCommand extends Command
+{
+    public $signature = 'convert-enums';
+
+    public $description = 'Convert PHP enums to JS/TS enums {--js}';
+
+    public function handle(): int
+    {
+        collect(config('enum-convertor-laravel.enum_paths'))
+            ->each(function ($outputPath, $path) {
+                $files = File::allFiles(base_path($path));
+
+                collect($files)->each(function($file) use ($outputPath) {
+                    $class = Str::of($file)->replace('.php', '')
+                        ->replace(base_path(), '')
+                        ->explode('/')
+                        ->map(fn($item) => Str::ucfirst($item))
+                        ->implode('\\');
+
+                    $items = collect($class::cases())->mapWithKeys(function ($item) {
+                        return [$item->name => $item->value ?? $item->name];
+                    });
+
+                    $output = '';
+                    if($this->hasOption('js')) {
+                        $output = $this->convertToJSEnum($items, $outputPath);
+                    } else {
+                        $output = $this->convertToTSEnum($items, $outputPath);
+                    }
+
+                    $outputFile = Str::of($file->getFilename())
+                        ->replace('.php', config('enum-convertor-laravel.enum_extension'));
+
+                    $name = class_basename($class);
+
+                    $output = str_replace('%enumName%', $name, $output);
+
+                    $this->info("Writing {$class} to file {$outputPath}/{$outputFile}");
+                    File::put($outputPath . '/' . $outputFile, $output);
+                });
+            });
+
+        return self::SUCCESS;
+    }
+
+    private function convertToTSEnum($items, $outputPath): string
+    {
+        $data = $items->map(function ($item, $key) {
+            $item = $this->convertValue($item);
+
+            return "    {$key} = {$item},";
+        })->implode("\n");
+
+        $data = "export enum %enumName% {\n{$data}\n}";
+
+        return $data;
+    }
+
+    private function convertToJSEnum($items): string
+    {
+        $data = $items->map(function ($item, $key) {
+            $item = $this->convertValue($item);
+
+            return "    {$key}: {$item},";
+        })->implode("\n");
+
+        $data = "export const %enumName% = Object.freeze({\n{$data}\n}";
+
+        return $data;
+    }
+
+    private function convertValue($item)
+    {
+        return match(gettype($item)) {
+            'string' => "\"$item\"",
+            'integer', 'double' => $item,
+            'NULL' => 'null',
+            'boolean' => $item ? 'true' : 'false',
+            default => $item,
+        };
+    }
+}
