@@ -20,7 +20,7 @@ class EnumConvertorCommand extends Command
                 $files = File::allFiles(base_path($path));
 
                 collect($files)->each(function ($file) use ($outputPath) {
-                    if(!$this->hasFileChanged($file)) {
+                    if (! $this->hasFileChanged($file)) {
                         return;
                     }
 
@@ -93,18 +93,19 @@ class EnumConvertorCommand extends Command
         };
     }
 
-    private function hasFileChanged($file) {
-        if(!config('enum-convertor-laravel.enable_file_hash_check', false)) {
+    private function hasFileChanged($file)
+    {
+        if (! config('enum-convertor-laravel.enable_file_hash_check', false)) {
             return true;
         }
 
         $fileHash = hash_file('sha256', $file->getPathname());
 
-        $cacheKey = 'enum-convertor-' . hash('sha256', $file->getPathname());
+        $cacheKey = 'enum-convertor-'.hash('sha256', $file->getPathname());
 
         $previousHash = Cache::get($cacheKey, '');
 
-        if($fileHash !== $previousHash) {
+        if ($fileHash !== $previousHash) {
             Cache::put($cacheKey, $fileHash);
 
             return true;
