@@ -37,6 +37,12 @@ return [
      * extension to use for the enum files
      */
     'enum_extension' => '.ts',
+
+    /*
+     * Enable File hash check
+     * - adds a hash check to determine if a file has changed to speed up performance
+     */
+    'enable_file_hash_check' => true,
 ];
 ```
 

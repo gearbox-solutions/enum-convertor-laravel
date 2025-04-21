@@ -3,6 +3,7 @@
 namespace GearboxSolutions\EnumConvertor\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -19,6 +20,10 @@ class EnumConvertorCommand extends Command
                 $files = File::allFiles(base_path($path));
 
                 collect($files)->each(function ($file) use ($outputPath) {
+                    if(!$this->hasFileChanged($file)) {
+                        return;
+                    }
+
                     $class = Str::of($file)->replace('.php', '')
                         ->replace(base_path(), '')
                         ->explode('/')
@@ -86,5 +91,25 @@ class EnumConvertorCommand extends Command
             'boolean' => $item ? 'true' : 'false',
             default => $item,
         };
+    }
+
+    private function hasFileChanged($file) {
+        if(!config('enum-convertor-laravel.enable_file_hash_check', false)) {
+            return true;
+        }
+
+        $fileHash = hash_file('sha256', $file->getPathname());
+
+        $cacheKey = 'enum-convertor-' . hash('sha256', $file->getPathname());
+
+        $previousHash = Cache::get($cacheKey, '');
+
+        if($fileHash !== $previousHash) {
+            Cache::put($cacheKey, $fileHash);
+
+            return true;
+        }
+
+        return false;
     }
 }
