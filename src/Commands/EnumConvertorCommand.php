@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class EnumConvertorCommand extends Command
 {
-    public $signature = 'convert-enums {--js}';
+    public $signature = 'convert-enums {--js} {--force : Force processing of enums}';
 
     public $description = 'Convert PHP enums to JS/TS enums';
 
@@ -20,7 +20,7 @@ class EnumConvertorCommand extends Command
                 $files = File::allFiles(base_path($path));
 
                 collect($files)->each(function ($file) use ($outputPath) {
-                    if (! $this->hasFileChanged($file)) {
+                    if (! $this->option('force') && ! $this->hasFileChanged($file)) {
                         return;
                     }
 
