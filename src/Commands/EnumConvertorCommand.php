@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 class EnumConvertorCommand extends Command
 {
-    public $signature = 'convert-enums';
+    public $signature = 'convert-enums {--js}';
 
-    public $description = 'Convert PHP enums to JS/TS enums {--js}';
+    public $description = 'Convert PHP enums to JS/TS enums';
 
     public function handle(): int
     {
@@ -30,7 +30,7 @@ class EnumConvertorCommand extends Command
                     });
 
                     $output = '';
-                    if ($this->hasOption('js')) {
+                    if ($this->option('js')) {
                         $output = $this->convertToJSEnum($items, $outputPath);
                     } else {
                         $output = $this->convertToTSEnum($items, $outputPath);
@@ -56,10 +56,10 @@ class EnumConvertorCommand extends Command
         $data = $items->map(function ($item, $key) {
             $item = $this->convertValue($item);
 
-            return "    {$key} = {$item},";
+            return "    {$key}: {$item},";
         })->implode("\n");
 
-        $data = "export enum %enumName% {\n{$data}\n}";
+        $data = "const %enumName% = {\n{$data}\n} as const;\n\nexport default %enumName%;\n\nexport type %enumName% = (typeof %enumName%)[keyof typeof %enumName%];";
 
         return $data;
     }

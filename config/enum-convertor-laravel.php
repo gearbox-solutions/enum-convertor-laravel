@@ -12,5 +12,5 @@ return [
     /*
      * extension to use for the enum files
      */
-    'enum_extension' => '.d.ts',
+    'enum_extension' => '.ts',
 ];
