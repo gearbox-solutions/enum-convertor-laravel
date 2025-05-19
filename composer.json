@@ -64,7 +64,5 @@
                 "EnumConverter": "GearboxSolutions\\EnumConverter\\Facades\\EnumConverter"
             }
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
