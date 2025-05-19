@@ -2,6 +2,12 @@
 
 All notable changes to `enum-converter-laravel` will be documented in this file.
 
+## 0.0.2 - 2025-05-19
+
+Fix composer stability flags
+
+**Full Changelog**: https://github.com/gearbox-solutions/enum-converter-laravel/compare/0.0.1...0.0.2
+
 ## 0.0.1 - 2025-05-19
 
 Initial release
