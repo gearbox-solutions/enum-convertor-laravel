@@ -12,7 +12,7 @@ This package adds a command that will take PHP enums and turn them into TS/JS en
 You can install the package via composer:
 
 ```bash
-composer require --dev likeadeckofcards/enum-convertor-laravel
+composer require --dev gearbox-solutions/enum-convertor-laravel
 ```
 
 You can publish the config file with:

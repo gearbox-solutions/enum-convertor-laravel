@@ -1,12 +1,12 @@
 {
-    "name": "likeadeckofcards/enum-convertor-laravel",
+    "name": "gearbox-solutions/enum-convertor-laravel",
     "description": "This is my package enum-convertor-laravel",
     "keywords": [
         "GearboxSolutions",
         "laravel",
         "enum-convertor-laravel"
     ],
-    "homepage": "https://github.com/likeadeckofcards/enum-convertor-laravel",
+    "homepage": "https://github.com/gearbox-solutions/enum-convertor-laravel",
     "license": "MIT",
     "authors": [
         {
