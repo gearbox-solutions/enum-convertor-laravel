@@ -1,12 +1,12 @@
 <?php
 
-namespace GearboxSolutions\EnumConvertor;
+namespace GearboxSolutions\EnumConverter;
 
-use GearboxSolutions\EnumConvertor\Commands\EnumConvertorCommand;
+use GearboxSolutions\EnumConverter\Commands\EnumConverterCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class EnumConvertorServiceProvider extends PackageServiceProvider
+class EnumConverterServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,8 +16,8 @@ class EnumConvertorServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('enum-convertor-laravel')
+            ->name('enum-converter-laravel')
             ->hasConfigFile()
-            ->hasCommand(EnumConvertorCommand::class);
+            ->hasCommand(EnumConverterCommand::class);
     }
 }

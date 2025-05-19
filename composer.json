@@ -1,12 +1,12 @@
 {
-    "name": "gearbox-solutions/enum-convertor-laravel",
-    "description": "This is my package enum-convertor-laravel",
+    "name": "gearbox-solutions/enum-converter-laravel",
+    "description": "This is my package enum-converter-laravel",
     "keywords": [
         "GearboxSolutions",
         "laravel",
-        "enum-convertor-laravel"
+        "enum-converter-laravel"
     ],
-    "homepage": "https://github.com/gearbox-solutions/enum-convertor-laravel",
+    "homepage": "https://github.com/gearbox-solutions/enum-converter-laravel",
     "license": "MIT",
     "authors": [
         {
@@ -30,13 +30,13 @@
     },
     "autoload": {
         "psr-4": {
-            "GearboxSolutions\\EnumConvertor\\": "src/",
-            "GearboxSolutions\\EnumConvertor\\Database\\Factories\\": "database/factories/"
+            "GearboxSolutions\\EnumConverter\\": "src/",
+            "GearboxSolutions\\EnumConverter\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "GearboxSolutions\\EnumConvertor\\Tests\\": "tests/",
+            "GearboxSolutions\\EnumConverter\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -58,10 +58,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "GearboxSolutions\\EnumConvertor\\EnumConvertorServiceProvider"
+                "GearboxSolutions\\EnumConverter\\EnumConverterServiceProvider"
             ],
             "aliases": {
-                "EnumConvertor": "GearboxSolutions\\EnumConvertor\\Facades\\EnumConvertor"
+                "EnumConverter": "GearboxSolutions\\EnumConverter\\Facades\\EnumConverter"
             }
         }
     },

@@ -1,13 +1,13 @@
 <?php
 
-namespace GearboxSolutions\EnumConvertor\Commands;
+namespace GearboxSolutions\EnumConverter\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class EnumConvertorCommand extends Command
+class EnumConverterCommand extends Command
 {
     public $signature = 'convert-enums {--js} {--force : Force processing of enums}';
 
@@ -15,7 +15,7 @@ class EnumConvertorCommand extends Command
 
     public function handle(): int
     {
-        collect(config('enum-convertor-laravel.enum_paths'))
+        collect(config('enum-converter-laravel.enum_paths'))
             ->each(function ($outputPath, $path) {
                 $files = File::allFiles(base_path($path));
 
@@ -42,7 +42,7 @@ class EnumConvertorCommand extends Command
                     }
 
                     $outputFile = Str::of($file->getFilename())
-                        ->replace('.php', config('enum-convertor-laravel.enum_extension'));
+                        ->replace('.php', config('enum-converter-laravel.enum_extension'));
 
                     $name = class_basename($class);
 
@@ -95,13 +95,13 @@ class EnumConvertorCommand extends Command
 
     private function hasFileChanged($file)
     {
-        if (! config('enum-convertor-laravel.enable_file_hash_check', false)) {
+        if (! config('enum-converter-laravel.enable_file_hash_check', false)) {
             return true;
         }
 
         $fileHash = hash_file('sha256', $file->getPathname());
 
-        $cacheKey = 'enum-convertor-'.hash('sha256', $file->getPathname());
+        $cacheKey = 'enum-converter-'.hash('sha256', $file->getPathname());
 
         $previousHash = Cache::get($cacheKey, '');
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace GearboxSolutions\EnumConvertor\Tests;
+namespace GearboxSolutions\EnumConverter\Tests;
 
-use GearboxSolutions\EnumConvertor\EnumConvertorServiceProvider;
+use GearboxSolutions\EnumConverter\EnumConverterServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'GearboxSolutions\\EnumConvertor\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'GearboxSolutions\\EnumConverter\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            EnumConvertorServiceProvider::class,
+            EnumConverterServiceProvider::class,
         ];
     }
 
